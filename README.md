@@ -3,5 +3,5 @@ This is going to be a raport based on Brazilian ecommerce public dataset of orde
 
 ```
 Kaggle dataset:
-https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce?resource=download
+https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce/data
 ```
