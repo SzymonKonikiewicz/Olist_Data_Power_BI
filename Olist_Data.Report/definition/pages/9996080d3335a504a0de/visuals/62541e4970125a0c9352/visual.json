@@ -1,0 +1,304 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "62541e4970125a0c9352",
+  "position": {
+    "x": 701.25,
+    "y": 112.5,
+    "z": 4000,
+    "height": 550,
+    "width": 512.5,
+    "tabOrder": 4000
+  },
+  "visual": {
+    "visualType": "map",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "full_states_names"
+                    }
+                  },
+                  "Property": "full_name"
+                }
+              },
+              "queryRef": "full_states_names.full_name",
+              "nativeQueryRef": "State",
+              "active": true,
+              "displayName": "State"
+            }
+          ]
+        },
+        "Size": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "olist_order_items_dataset"
+                    }
+                  },
+                  "Property": "income_BRL"
+                }
+              },
+              "queryRef": "olist_order_items_dataset.Przychód",
+              "nativeQueryRef": "Revenue (BRL)",
+              "displayName": "Revenue (BRL)"
+            }
+          ]
+        },
+        "Tooltips": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "olist_order_items_dataset"
+                    }
+                  },
+                  "Property": "income_USD"
+                }
+              },
+              "queryRef": "olist_order_items_dataset.Income USD",
+              "nativeQueryRef": "Revenue (USD)",
+              "displayName": "Revenue (USD)"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "olist_orders_dataset"
+                    }
+                  },
+                  "Property": "delayed_orders_metric"
+                }
+              },
+              "queryRef": "olist_orders_dataset.Delayed_Orders_Metric",
+              "nativeQueryRef": "Delayed Orders",
+              "displayName": "Delayed Orders"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "mapStyles": [
+        {
+          "properties": {
+            "mapTheme": {
+              "expr": {
+                "Literal": {
+                  "Value": "'road'"
+                }
+              }
+            },
+            "showLabels": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "mapControls": [
+        {
+          "properties": {
+            "showZoomButtons": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "bubbles": [
+        {
+          "properties": {
+            "markerRangeType": {
+              "expr": {
+                "Literal": {
+                  "Value": "'auto'"
+                }
+              }
+            },
+            "bubbleSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "-5L"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "heatMap": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "filterRadius": {
+              "expr": {
+                "Literal": {
+                  "Value": "28D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "categoryLabels": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Revenue and Late Deliveries by State'"
+                }
+              }
+            },
+            "heading": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Heading3'"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "17D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Bubble size indicates total revenue'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "14D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "0b4d00d09d7ecd878d3c",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "olist_order_items_dataset"
+              }
+            },
+            "Property": "income_BRL"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "764eb0821bd5fa0f41e9",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "olist_orders_dataset"
+              }
+            },
+            "Property": "delayed_orders_metric"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "2532c0411b37f4b5afbf",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "olist_order_items_dataset"
+              }
+            },
+            "Property": "income_USD"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "cd0a36dc49ad4d36e77d",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "full_states_names"
+              }
+            },
+            "Property": "full_name"
+          }
+        },
+        "type": "Categorical"
+      }
+    ]
+  }
+}

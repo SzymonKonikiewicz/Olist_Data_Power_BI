@@ -1,0 +1,27 @@
+model Model
+	culture: pl-PL
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: pl-PL
+	valueFilterBehavior: independent
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["olist_orders_dataset","olist_order_items_dataset","olist_customers_dataset","olist_products_dataset","product_category_name_translation","full_states_names"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table olist_orders_dataset
+ref table DateTableTemplate_6517c5ab-d44e-49aa-bee8-56f800c43fa8
+ref table olist_order_items_dataset
+ref table LocalDateTable_70ec6552-fe2f-4f80-8c44-6b034159af4d
+ref table olist_customers_dataset
+ref table olist_products_dataset
+ref table product_category_name_translation
+ref table callendar
+ref table full_states_names
+
+ref cultureInfo pl-PL
+

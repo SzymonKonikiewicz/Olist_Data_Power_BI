@@ -1,0 +1,168 @@
+table olist_orders_dataset
+	lineageTag: bfe96bd3-5741-4fbc-a63e-a42b1b9118e7
+
+	measure delayed_orders =
+			
+			CALCULATE(
+			    COUNTROWS('olist_orders_dataset'),
+			    FILTER(
+			        'olist_orders_dataset',
+			        'olist_orders_dataset'[order_delivered_customer_date] > 'olist_orders_dataset'[order_estimated_delivery_date]
+			    )
+			)
+		formatString: 0
+		lineageTag: 4ce409b6-d24e-4e1f-a4a5-e312d54656fe
+
+	measure delayed_orders_metric = DIVIDE([delayed_orders], COUNTROWS('olist_orders_dataset'), 0)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 79eb0d5c-ee92-4e6c-b672-080c9322a514
+
+	column order_id
+		dataType: string
+		lineageTag: 5c4b3628-c2ec-46b2-b2b3-fa2fdc3cf222
+		summarizeBy: none
+		sourceColumn: order_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_id
+		dataType: string
+		lineageTag: 56de8ba0-cf51-46e3-9108-4afa499233d0
+		summarizeBy: none
+		sourceColumn: customer_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_status
+		dataType: string
+		lineageTag: 6ec08ffc-2af2-4842-bc60-458570b00564
+		summarizeBy: none
+		sourceColumn: order_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_purchase_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: ae779659-3852-467b-b4aa-91a6bca94b9a
+		summarizeBy: none
+		sourceColumn: order_purchase_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column order_approved_at_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 054b9389-74b2-4620-a40b-19b2cf852420
+		summarizeBy: none
+		sourceColumn: order_approved_at_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column order_delivered_carrier_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: bbaab873-2cd1-4a9c-bbbb-9f5f7721bf4c
+		summarizeBy: none
+		sourceColumn: order_delivered_carrier_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column order_delivered_customer_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: b76062ff-1e15-4a41-af22-00b667c2a075
+		summarizeBy: none
+		sourceColumn: order_delivered_customer_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column order_estimated_delivery_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 240490f9-39b8-436c-a2a4-963c989c08fd
+		summarizeBy: none
+		sourceColumn: order_estimated_delivery_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column order_purchase_time
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: 9e2b8a17-cf26-4a43-9e11-ab9a8287c906
+		summarizeBy: none
+		sourceColumn: order_purchase_time
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column order_approved_at_time
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: cf996356-7950-417c-8a47-81a018f5da69
+		summarizeBy: none
+		sourceColumn: order_approved_at_time
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column order_delivered_carrier_time
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: 5f56be2a-e299-4a01-a66d-9b3a1773280e
+		summarizeBy: none
+		sourceColumn: order_delivered_carrier_time
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column order_delivered_customer_time
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: f23cec9b-21ed-4e8a-91c6-cd5f55754019
+		summarizeBy: none
+		sourceColumn: order_delivered_customer_time
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	partition olist_orders_dataset = m
+		mode: import
+		source =
+				let
+				  Źródło = Csv.Document(File.Contents("C:\Users\szyme\Desktop\archive\olist_orders_dataset.csv"), [Delimiter = ",", Columns = 8, QuoteStyle = QuoteStyle.None]),
+				  #"Nagłówki o podwyższonym poziomie" = Table.PromoteHeaders(Źródło, [PromoteAllScalars = true]),
+				  #"Zmieniono typ kolumny" = Table.TransformColumnTypes(#"Nagłówki o podwyższonym poziomie", {{"order_purchase_timestamp", type datetime}, {"order_id", type text}, {"customer_id", type text}, {"order_status", type text}, {"order_approved_at", type datetime}, {"order_delivered_carrier_date", type datetime}, {"order_delivered_customer_date", type datetime}, {"order_estimated_delivery_date", type datetime}}),
+				  #"Zduplikowano kolumnę" = Table.DuplicateColumn(#"Zmieniono typ kolumny", "order_purchase_timestamp", "order_purchase_timestamp — kopia"),
+				  #"Zmieniono typ kolumny 1" = Table.TransformColumnTypes(#"Zduplikowano kolumnę", {{"order_purchase_timestamp", type date}, {"order_purchase_timestamp — kopia", type time}}),
+				  #"Zmieniono nazwy kolumn" = Table.RenameColumns(#"Zmieniono typ kolumny 1", {{"order_purchase_timestamp — kopia", "order_purchase_time"}, {"order_purchase_timestamp", "order_purchase_date"}}),
+				  #"Zduplikowano kolumnę 1" = Table.DuplicateColumn(#"Zmieniono nazwy kolumn", "order_approved_at", "order_approved_at — kopia"),
+				  #"Zmieniono typ kolumny 2" = Table.TransformColumnTypes(#"Zduplikowano kolumnę 1", {{"order_approved_at — kopia", type time}}),
+				  #"Zmieniono nazwy kolumn 1" = Table.RenameColumns(#"Zmieniono typ kolumny 2", {{"order_approved_at — kopia", "order_approved_at_time"}}),
+				  #"Zmieniono typ kolumny 3" = Table.TransformColumnTypes(#"Zmieniono nazwy kolumn 1", {{"order_approved_at", type date}}),
+				  #"Zmieniono nazwy kolumn 2" = Table.RenameColumns(#"Zmieniono typ kolumny 3", {{"order_approved_at", "order_approved_at_date"}}),
+				  #"Zduplikowano kolumnę 2" = Table.DuplicateColumn(#"Zmieniono nazwy kolumn 2", "order_delivered_carrier_date", "order_delivered_carrier_date — kopia"),
+				  #"Zmieniono nazwy kolumn 3" = Table.RenameColumns(#"Zduplikowano kolumnę 2", {{"order_delivered_carrier_date — kopia", "order_delivered_carrier_time"}}),
+				  #"Zmieniono typ kolumny 4" = Table.TransformColumnTypes(#"Zmieniono nazwy kolumn 3", {{"order_delivered_carrier_time", type time}, {"order_delivered_carrier_date", type date}}),
+				  #"Zduplikowano kolumnę 3" = Table.DuplicateColumn(#"Zmieniono typ kolumny 4", "order_delivered_customer_date", "order_delivered_customer_date — kopia"),
+				  #"Zmieniono nazwy kolumn 4" = Table.RenameColumns(#"Zduplikowano kolumnę 3", {{"order_delivered_customer_date — kopia", "order_delivered_customer_time"}}),
+				  #"Zmieniono typ kolumny 5" = Table.TransformColumnTypes(#"Zmieniono nazwy kolumn 4", {{"order_delivered_customer_time", type time}, {"order_delivered_customer_date", type date}, {"order_estimated_delivery_date", type date}})
+				in
+				  #"Zmieniono typ kolumny 5"
+
+	annotation PBI_ResultType = Table
+

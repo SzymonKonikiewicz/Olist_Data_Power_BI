@@ -1,0 +1,58 @@
+table callendar
+	lineageTag: 43481c9a-6279-434e-853a-4267b754a4fc
+	dataCategory: Time
+
+	column date
+		isKey
+		formatString: General Date
+		lineageTag: f08f191d-9712-46b0-8807-83587375b439
+		summarizeBy: none
+		sourceColumn: [Date]
+
+		annotation SummarizationSetBy = Automatic
+
+	column year
+		formatString: 0
+		lineageTag: 7a3216a0-cd26-4242-817f-7586e3a946df
+		summarizeBy: none
+		sourceColumn: [Rok]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'month num'
+		formatString: 0
+		lineageTag: 11058b27-e1cf-47b5-9b81-473fef204501
+		summarizeBy: none
+		sourceColumn: [Miesiąc Num]
+
+		annotation SummarizationSetBy = Automatic
+
+	column month
+		lineageTag: c4084818-ceb5-4ea3-8bfa-6ebb2b6adb67
+		summarizeBy: none
+		sourceColumn: [Miesiąc]
+		sortByColumn: 'month num'
+
+		annotation SummarizationSetBy = Automatic
+
+	column quarter
+		lineageTag: e03fd646-a58b-40c1-af25-458df85da49f
+		summarizeBy: none
+		sourceColumn: [Kwartał]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition callendar = calculated
+		mode: import
+		source =
+				
+				ADDCOLUMNS(
+				    CALENDAR(DATE(2016, 1, 1), DATE(2018, 12, 31)),
+				    "Rok", YEAR([Date]),
+				    "Miesiąc Num", MONTH([Date]),
+				    "Miesiąc", FORMAT([Date], "MMMM", "en-US"),
+				    "Kwartał", "Q" & FORMAT([Date], "Q")
+				)
+
+	annotation PBI_Id = 83c2a693b54740bb95a4605bd60cad54
+

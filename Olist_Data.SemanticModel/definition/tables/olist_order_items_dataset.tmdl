@@ -1,0 +1,96 @@
+table olist_order_items_dataset
+	lineageTag: 1a531578-a4bc-4d97-89fb-10cfa0c23d6c
+
+	measure income_BRL = SUM(olist_order_items_dataset[price]) + SUM(olist_order_items_dataset[freight_value])
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: dc776590-5778-468d-95e8-717ad20dd3d4
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure income_USD = [income_BRL] * 0.30
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: 76dd47fe-4b7a-41d9-91d7-390281d97e9b
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column order_id
+		dataType: string
+		lineageTag: fc6d7076-416d-4527-bc39-cd0e67574288
+		summarizeBy: none
+		sourceColumn: order_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_item_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 16725b2c-178c-4f5d-a485-3a003a995911
+		summarizeBy: sum
+		sourceColumn: order_item_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_id
+		dataType: string
+		lineageTag: 2402f025-86db-439a-9816-7dbd304bccdf
+		summarizeBy: none
+		sourceColumn: product_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column seller_id
+		dataType: string
+		lineageTag: c553ba74-0142-4706-93b4-9226ce683aba
+		summarizeBy: none
+		sourceColumn: seller_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column shipping_limit_date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: f10e8c61-a640-4a80-bedf-0fc92af59725
+		summarizeBy: none
+		sourceColumn: shipping_limit_date
+
+		variation Odmiana
+			isDefault
+			relationship: 0090c9cc-e749-44f2-a58b-23719759d08d
+			defaultHierarchy: LocalDateTable_70ec6552-fe2f-4f80-8c44-6b034159af4d.'Hierarchia dat'
+
+		annotation SummarizationSetBy = Automatic
+
+	column price
+		dataType: double
+		lineageTag: 244d3fa4-1e36-4249-abf4-81d509441a97
+		summarizeBy: sum
+		sourceColumn: price
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column freight_value
+		dataType: double
+		lineageTag: a0d4cc7b-9e36-4bdb-9687-bec79c388b94
+		summarizeBy: sum
+		sourceColumn: freight_value
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition olist_order_items_dataset = m
+		mode: import
+		source =
+				let
+				  Źródło = Csv.Document(File.Contents("C:\Users\szyme\Desktop\archive\olist_order_items_dataset.csv"), [Delimiter = ",", Columns = 7, QuoteStyle = QuoteStyle.None]),
+				  #"Nagłówki o podwyższonym poziomie" = Table.PromoteHeaders(Źródło, [PromoteAllScalars = true]),
+				  #"Zmieniono typ kolumny" = Table.TransformColumnTypes(#"Nagłówki o podwyższonym poziomie", {{"order_id", type text}, {"order_item_id", Int64.Type}, {"product_id", type text}, {"seller_id", type text}, {"shipping_limit_date", type datetime}, {"price", type text}, {"freight_value", type text}}, "pl"),
+				  #"Zmieniono typ kolumny za pomocą ustawień regionalnych" = Table.TransformColumnTypes(#"Zmieniono typ kolumny", {{"price", type number}}, "en-US"),
+				  #"Zmieniono typ kolumny za pomocą ustawień regionalnych 1" = Table.TransformColumnTypes(#"Zmieniono typ kolumny za pomocą ustawień regionalnych", {{"freight_value", type number}}, "en-US")
+				in
+				  #"Zmieniono typ kolumny za pomocą ustawień regionalnych 1"
+
+	annotation PBI_ResultType = Table
+

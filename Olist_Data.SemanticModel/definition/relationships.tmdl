@@ -1,0 +1,51 @@
+relationship 0090c9cc-e749-44f2-a58b-23719759d08d
+	joinOnDateBehavior: datePartOnly
+	fromColumn: olist_order_items_dataset.shipping_limit_date
+	toColumn: LocalDateTable_70ec6552-fe2f-4f80-8c44-6b034159af4d.Date
+
+relationship AutoDetected_fb68e5f3-a934-42a0-8776-c63a3a7d9f1d
+	fromColumn: olist_order_items_dataset.order_id
+	toColumn: olist_orders_dataset.order_id
+
+relationship AutoDetected_58a87b86-0a4a-455f-9c31-39c5ee5a5b30
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: olist_customers_dataset.customer_id
+	toColumn: olist_orders_dataset.customer_id
+
+relationship AutoDetected_f1499bd0-6d41-4d7a-9fff-8d0f036501c7
+	fromColumn: olist_order_items_dataset.product_id
+	toColumn: olist_products_dataset.product_id
+
+relationship AutoDetected_2d4dc634-cb10-470b-a696-3a3b45b17a22
+	fromColumn: olist_products_dataset.product_name_en
+	toColumn: product_category_name_translation.Column2
+
+relationship 1685d14f-e592-f179-5c95-f222ccb33a2f
+	fromColumn: olist_customers_dataset.customer_state
+	toColumn: full_states_names.states_id
+
+relationship a029cd1e-9b5b-ac8a-e12f-ce6ac8951320
+	fromColumn: olist_orders_dataset.order_purchase_date
+	toColumn: callendar.date
+
+relationship 04da0f93-1419-79cf-e936-3a7f76cf5c20
+	isActive: false
+	fromColumn: olist_orders_dataset.order_delivered_customer_date
+	toColumn: callendar.date
+
+relationship 049551d7-9f3d-4e91-223d-68529a64b1bb
+	isActive: false
+	fromColumn: olist_orders_dataset.order_delivered_carrier_date
+	toColumn: callendar.date
+
+relationship b5b881c9-cfda-b88a-5691-91a93f535af8
+	isActive: false
+	fromColumn: olist_orders_dataset.order_approved_at_date
+	toColumn: callendar.date
+
+relationship 2d2b6386-2aa0-e382-b1d6-64cf0e957ac1
+	isActive: false
+	fromColumn: olist_orders_dataset.order_estimated_delivery_date
+	toColumn: callendar.date
+

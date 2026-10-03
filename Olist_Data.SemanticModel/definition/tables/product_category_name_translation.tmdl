@@ -1,0 +1,29 @@
+table product_category_name_translation
+	lineageTag: 6bef68a4-94bf-4afd-b618-f1836fb58d92
+
+	column Column1
+		dataType: string
+		lineageTag: dcf6f303-efa4-468b-9b6a-ba8cf454675e
+		summarizeBy: none
+		sourceColumn: Column1
+
+		annotation SummarizationSetBy = Automatic
+
+	column Column2
+		dataType: string
+		lineageTag: aa013958-c379-411b-9565-af62113d4103
+		summarizeBy: none
+		sourceColumn: Column2
+
+		annotation SummarizationSetBy = Automatic
+
+	partition product_category_name_translation = m
+		mode: import
+		source =
+				let
+				  Źródło = Csv.Document(File.Contents("C:\Users\szyme\Desktop\archive\product_category_name_translation.csv"), [Delimiter = ",", Columns = 2, Encoding = 65001, QuoteStyle = QuoteStyle.None])
+				in
+				  Źródło
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,30 @@
+table full_states_names
+	lineageTag: 306bb5f8-d96f-40d1-a0b0-faa069a15b8b
+
+	column states_id
+		dataType: string
+		lineageTag: 4663ec43-cb3f-4fed-b8ba-156e72c51673
+		summarizeBy: none
+		sourceColumn: states_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column full_name
+		dataType: string
+		lineageTag: 52b93564-08ca-466b-a63a-0e389c7b93cf
+		summarizeBy: none
+		sourceColumn: full_name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition full_states_names = m
+		mode: import
+		source =
+				let
+				  Źródło = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("ZVFBboMwEPwK4pxPACGoUUktm1uUwwasxFKwkYFLfxP1zK0/8Me663UqVT3OzHpndnw+50WV7/Ki9zq/7BC9E3rAzcHMhCBihCk8GbeMP51NE2WBTAl3AxFWNcJKg08P9gfEezMv3iwuO+hBe3hEpVao1PMUtigpsIuLQvOBQuNMeLJDSw4teLD38MUjbRcpfNZ4N8+JVH/JbMCtK5u1DWkGQ2cNJjC8WdBm8ZtVlAwhbFe+RsjE2NcInSe0tzBe1559xRtxBtawRSyPiKVBf50dwWrjeU6eEt/gPtQw3sn5hZuX6p/4yi6pD+nsEL5talnKSOEhIxOKvpEqhKyCBTxeyjz9n8LaMgHrg3MoukFpfzMTe3dk0LkenxuLzVx+AA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [ID = _t, Full_Name = _t]),
+				    #"Zmieniono nazwy kolumn" = Table.RenameColumns(Źródło,{{"ID", "states_id"}, {"Full_Name", "full_name"}})
+				in
+				  #"Zmieniono nazwy kolumn"
+
+	annotation PBI_ResultType = Table
+

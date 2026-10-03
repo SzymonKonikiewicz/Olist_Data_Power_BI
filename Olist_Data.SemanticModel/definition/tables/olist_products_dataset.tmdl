@@ -1,0 +1,105 @@
+table olist_products_dataset
+	lineageTag: 5dfc7318-020d-416e-bfca-d537dd72a0a3
+
+	column product_id
+		dataType: string
+		lineageTag: bce66f23-115d-4215-93b8-3ef68ca76a73
+		summarizeBy: none
+		sourceColumn: product_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_category_name
+		dataType: string
+		lineageTag: d6356ec8-3762-45f4-a33f-62b54194a389
+		summarizeBy: none
+		sourceColumn: product_category_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_name_lenght
+		dataType: int64
+		formatString: 0
+		lineageTag: abc4f1e9-e1f2-4d56-9ca3-d7d2b69d984f
+		summarizeBy: sum
+		sourceColumn: product_name_lenght
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_description_lenght
+		dataType: int64
+		formatString: 0
+		lineageTag: c4950b0c-735d-4413-b29d-031cb68b07a1
+		summarizeBy: sum
+		sourceColumn: product_description_lenght
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_photos_qty
+		dataType: int64
+		formatString: 0
+		lineageTag: 73ec9e7b-1be2-434a-80f7-3328f61d638c
+		summarizeBy: sum
+		sourceColumn: product_photos_qty
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_weight_g
+		dataType: int64
+		formatString: 0
+		lineageTag: b9286adf-8bbc-4233-a1de-764b8def7dbe
+		summarizeBy: sum
+		sourceColumn: product_weight_g
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_length_cm
+		dataType: int64
+		formatString: 0
+		lineageTag: 7fe36a43-1a9f-4e8b-8224-94d316370708
+		summarizeBy: sum
+		sourceColumn: product_length_cm
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_height_cm
+		dataType: int64
+		formatString: 0
+		lineageTag: 444e7285-307e-4e02-9e81-ac937299b01c
+		summarizeBy: sum
+		sourceColumn: product_height_cm
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_width_cm
+		dataType: int64
+		formatString: 0
+		lineageTag: 9dccfdae-cc23-465f-8a38-7b9db6c81800
+		summarizeBy: sum
+		sourceColumn: product_width_cm
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_name_en
+		dataType: string
+		lineageTag: 565bfd62-39e5-4a1a-b7e7-80b2f4060be3
+		summarizeBy: none
+		sourceColumn: product_name_en
+
+		annotation SummarizationSetBy = Automatic
+
+	partition olist_products_dataset = m
+		mode: import
+		source =
+				let
+				  Źródło = Csv.Document(File.Contents("C:\Users\szyme\Desktop\archive\olist_products_dataset.csv"), [Delimiter = ",", Columns = 9, QuoteStyle = QuoteStyle.None]),
+				  #"Nagłówki o podwyższonym poziomie" = Table.PromoteHeaders(Źródło, [PromoteAllScalars = true]),
+				  #"Zmieniono typ kolumny" = Table.TransformColumnTypes(#"Nagłówki o podwyższonym poziomie", {{"product_id", type text}, {"product_category_name", type text}, {"product_name_lenght", Int64.Type}, {"product_description_lenght", Int64.Type}, {"product_photos_qty", Int64.Type}, {"product_weight_g", Int64.Type}, {"product_length_cm", Int64.Type}, {"product_height_cm", Int64.Type}, {"product_width_cm", Int64.Type}}, "pl"),
+				  #"Scalone zapytania" = Table.NestedJoin(#"Zmieniono typ kolumny", {"product_category_name"}, product_category_name_translation, {"Column1"}, "product_category_name_translation", JoinKind.LeftOuter),
+				  #"Rozwinięta kolumna product_category_name_translation" = Table.ExpandTableColumn(#"Scalone zapytania", "product_category_name_translation", {"Column2"}, {"Column2"}),
+				  #"Zmieniono nazwy kolumn" = Table.RenameColumns(#"Rozwinięta kolumna product_category_name_translation", {{"Column2", "product_name_en"}})
+				in
+				  #"Zmieniono nazwy kolumn"
+
+	annotation PBI_ResultType = Table
+

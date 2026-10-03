@@ -1,0 +1,75 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "311503d02f1a09b63199",
+  "position": {
+    "x": 101,
+    "y": 368,
+    "z": 1000,
+    "height": 327,
+    "width": 600,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "clusteredBarChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "olist_products_dataset"
+                    }
+                  },
+                  "Property": "product_name_en"
+                }
+              },
+              "queryRef": "olist_products_dataset.product_name_en",
+              "nativeQueryRef": "product_name_en",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "olist_order_items_dataset"
+                    }
+                  },
+                  "Property": "income_BRL"
+                }
+              },
+              "queryRef": "olist_order_items_dataset.Przychód",
+              "nativeQueryRef": "income_BRL"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "olist_order_items_dataset"
+                  }
+                },
+                "Property": "income_BRL"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}
