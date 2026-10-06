@@ -17,6 +17,10 @@ table olist_orders_dataset
 		formatString: 0.00%;-0.00%;0.00%
 		lineageTag: 79eb0d5c-ee92-4e6c-b672-080c9322a514
 
+	measure average_delivery_time = AVERAGEX(FILTER('olist_orders_dataset', NOT ISBLANK('olist_orders_dataset'[order_delivered_customer_date])), DATEDIFF('olist_orders_dataset'[order_purchase_date],'olist_orders_dataset'[order_delivered_customer_date],DAY))
+		formatString: #,0.0
+		lineageTag: 6dc45f74-a8cd-458c-ac69-e447d3495936
+
 	column order_id
 		dataType: string
 		lineageTag: 5c4b3628-c2ec-46b2-b2b3-fa2fdc3cf222

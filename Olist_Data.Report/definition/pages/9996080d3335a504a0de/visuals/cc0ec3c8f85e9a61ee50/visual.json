@@ -1,0 +1,57 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "cc0ec3c8f85e9a61ee50",
+  "position": {
+    "x": 702.0334628115412,
+    "y": 705.74792557773981,
+    "z": 6001,
+    "height": 326.87272342547948,
+    "width": 598.0285053579795,
+    "tabOrder": 6001
+  },
+  "visual": {
+    "visualType": "clusteredColumnChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "callendar"
+                    }
+                  },
+                  "Property": "month"
+                }
+              },
+              "queryRef": "callendar.month",
+              "nativeQueryRef": "month",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "olist_orders_dataset"
+                    }
+                  },
+                  "Property": "average_delivery_time"
+                }
+              },
+              "queryRef": "olist_orders_dataset.average_delivery_time",
+              "nativeQueryRef": "average_delivery_time"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

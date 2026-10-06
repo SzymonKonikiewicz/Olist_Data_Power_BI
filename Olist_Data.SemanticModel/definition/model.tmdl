@@ -22,6 +22,7 @@ ref table olist_products_dataset
 ref table product_category_name_translation
 ref table callendar
 ref table full_states_names
+ref table metric_selector
 
 ref cultureInfo pl-PL
 

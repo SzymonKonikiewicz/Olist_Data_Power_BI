@@ -46,9 +46,25 @@
                   "Property": "income_BRL"
                 }
               },
-              "queryRef": "olist_order_items_dataset.Przychód",
-              "nativeQueryRef": "Revenue (BRL)",
-              "displayName": "Revenue (BRL)"
+              "queryRef": "olist_order_items_dataset.income_BRL",
+              "nativeQueryRef": "income_BRL",
+              "displayName": "income_BRL"
+            }
+          ],
+          "fieldParameters": [
+            {
+              "parameterExpr": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "metric_selector"
+                    }
+                  },
+                  "Property": "metric_selector"
+                }
+              },
+              "index": 0,
+              "length": 1
             }
           ]
         },
@@ -81,8 +97,8 @@
                 }
               },
               "queryRef": "olist_orders_dataset.Delayed_Orders_Metric",
-              "nativeQueryRef": "Delayed Orders",
-              "displayName": "Delayed Orders"
+              "nativeQueryRef": "delayed_orders_metric",
+              "displayName": "delayed_orders_metric"
             }
           ]
         }
@@ -243,34 +259,6 @@
   },
   "filterConfig": {
     "filters": [
-      {
-        "name": "0b4d00d09d7ecd878d3c",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "olist_order_items_dataset"
-              }
-            },
-            "Property": "income_BRL"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "764eb0821bd5fa0f41e9",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "olist_orders_dataset"
-              }
-            },
-            "Property": "delayed_orders_metric"
-          }
-        },
-        "type": "Advanced"
-      },
       {
         "name": "2532c0411b37f4b5afbf",
         "field": {

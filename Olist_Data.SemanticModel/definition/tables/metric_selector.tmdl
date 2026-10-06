@@ -1,0 +1,49 @@
+table metric_selector
+	lineageTag: 958ff3d9-75f2-425b-8f09-0dd4d444c8df
+
+	column metric_selector
+		lineageTag: 330a83b8-f3a8-4593-9b2d-98a3d3f0def9
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'Kolejność metric_selector'
+
+		relatedColumnDetails
+			groupByColumn: 'Pola: metric_selector'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Pola: metric_selector'
+		isHidden
+		lineageTag: d49aaa8a-6323-4a77-9b0b-53b9bfa27bdb
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'Kolejność metric_selector'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Kolejność metric_selector'
+		isHidden
+		formatString: 0
+		lineageTag: decefeea-4126-491b-8008-7b7481e42f9e
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition metric_selector = calculated
+		mode: import
+		source =
+				{
+				    ("income_BRL", NAMEOF('olist_order_items_dataset'[income_BRL]), 0),
+				    ("average_delivery_time", NAMEOF('olist_orders_dataset'[average_delivery_time]), 1),
+				    ("delayed_orders_metric", NAMEOF('olist_orders_dataset'[delayed_orders_metric]), 2)
+				}
+
+	annotation PBI_Id = 22a07f864c744f828c13c1252e046fb8
+
