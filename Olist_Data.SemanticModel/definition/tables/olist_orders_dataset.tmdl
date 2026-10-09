@@ -21,6 +21,28 @@ table olist_orders_dataset
 		formatString: #,0.0
 		lineageTag: 6dc45f74-a8cd-458c-ac69-e447d3495936
 
+	measure pareto = ```
+			VAR TotalRevenue = CALCULATE([income_BRL], ALLSELECTED('olist_products_dataset'[product_category_name]))
+			VAR CurrentCategoryRevenue = [income_BRL]
+			VAR CumulativeRevenue = 
+			    CALCULATE(
+			        [income_BRL],
+			        FILTER(
+			            ALLSELECTED('olist_products_dataset'[product_category_name]),
+			            [income_BRL] >= CurrentCategoryRevenue
+			        )
+			    )
+			RETURN
+			DIVIDE(CumulativeRevenue, TotalRevenue)
+			```
+		lineageTag: 839c152b-d9f8-4d52-a1c0-b58d61b8cf6b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 80_percent = 0.8
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: edbd3861-4bf8-41bf-a806-de82adde832a
+
 	column order_id
 		dataType: string
 		lineageTag: 5c4b3628-c2ec-46b2-b2b3-fa2fdc3cf222
